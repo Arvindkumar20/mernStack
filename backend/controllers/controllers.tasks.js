@@ -15,11 +15,21 @@ const handleGetTasks=async(req,res)=>{
         }));
         res.json(formattedTasks);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+       return res.status(500).json({ message: err.message });
     }
+}
+const handleUpdateTask= async (req, res) => {
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updatedTask);
+}
+const handleDeleteTask=async(req,res)=>{
+    await Task.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Task deleted' });
 }
 export {
     handleCreateTasks,
     handleGetTasks,
+    handleUpdateTask,
+    handleDeleteTask,
 
 }

@@ -11,7 +11,6 @@ const taskSchema=mongoose.Schema({
     },
     completed:{
         type:Boolean,
-        required:true,
         default:false
     },
 

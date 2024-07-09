@@ -1,12 +1,14 @@
 import { useState } from "react"
 import axios from "axios"
+import { useContext } from 'react';
+import TaskContext  from '../../context/taskContext.js';
 export default function AddForm() {
+  const {addTask}=useContext(TaskContext)
     const [formData,setFormData]=useState({
       name:"",
       description:"",
-     
     })
-     
+ 
       const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -19,13 +21,13 @@ export default function AddForm() {
       try {
           const response = await axios.post('http://localhost:4000/api/tasks', formData);
           console.log('Task saved:', response.data);
+          addTask(response.data);
           setFormData({ name: '', description: ''});
       } catch (error) {
           console.error('Error saving task:', error);
       }
   };
-       
-  return (
+         return (
     <>
     <div className="container w-50 bg-dark my-3 p-5 rounded">
         <h1 className="text-light">   Add Your Tasks In Task List</h1>
